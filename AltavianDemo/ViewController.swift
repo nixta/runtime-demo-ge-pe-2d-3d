@@ -103,11 +103,12 @@ extension ViewController {
 
     /// Buffer creation
     func getBufferGeometryFor(mapPoint: AGSPoint) -> AGSPolygon? {
-        guard let extent = mapView.currentViewpoint(with: .boundingGeometry)?.targetGeometry as? AGSEnvelope else { return nil }
+        guard let extent = mapView.currentViewpoint(with: .boundingGeometry)?.targetGeometry as? AGSEnvelope,
+            let webMercatorExtent = AGSGeometryEngine.projectGeometry(extent, to: AGSSpatialReference.webMercator()) as? AGSEnvelope else { return nil }
 
-        let unit = mapPoint.spatialReference?.unit as? AGSLinearUnit ?? AGSLinearUnit.meters()
-        let size = min(extent.width, extent.height) * bufferSize / 2
-        
+        let unit = webMercatorExtent.spatialReference?.unit as? AGSLinearUnit ?? AGSLinearUnit.meters()
+        let size = min(webMercatorExtent.width, webMercatorExtent.height) * bufferSize / 2
+
         return AGSGeometryEngine.geodeticBufferGeometry(mapPoint, distance: size, distanceUnit: unit,
                                                         maxDeviation: Double.nan, curveType: .shapePreserving)
     }
