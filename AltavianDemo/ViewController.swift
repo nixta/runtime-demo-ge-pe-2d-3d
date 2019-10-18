@@ -90,6 +90,14 @@ class ViewController: UIViewController {
     @IBAction func clearGraphics(_ sender: Any) {
         clearGraphics()
     }
+    
+    @IBAction func clearBuffer(_ sender: Any) {
+        (bufferOverlay.graphics.firstObject as? AGSGraphic)?.geometry = nil
+        updateGraphicsForBuffer()
+        bufferOverlay.graphics.removeAllObjects()
+        insideBufferLabel.text = "No Buffer"
+        outsideBufferLabel.text = "No Buffer"
+    }
 }
 
 extension ViewController {
