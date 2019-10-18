@@ -65,10 +65,17 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CdV-Nf-Dgq">
-                                                        <rect key="frame" x="272" y="0.0" width="102" height="30"/>
+                                                        <rect key="frame" x="141" y="0.0" width="102" height="30"/>
                                                         <state key="normal" title="Clear Graphics"/>
                                                         <connections>
                                                             <action selector="clearGraphics:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IMk-aW-wEX"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oJI-HC-qBl">
+                                                        <rect key="frame" x="291" y="0.0" width="83" height="30"/>
+                                                        <state key="normal" title="Clear Buffer"/>
+                                                        <connections>
+                                                            <action selector="clearBuffer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a9w-C6-neO"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
