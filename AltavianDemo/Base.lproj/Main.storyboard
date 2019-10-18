@@ -44,7 +44,7 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdl-YP-mfq" customClass="AGSMapView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdl-YP-mfq" customClass="AGSSceneView">
                                 <rect key="frame" x="0.0" y="164" width="414" height="590"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
@@ -129,9 +129,9 @@
                         <outlet property="insideBufferLabel" destination="q5Z-kG-KkK" id="E7k-B0-God"/>
                         <outlet property="latLonLabel" destination="uy9-4g-T6X" id="b02-rw-gne"/>
                         <outlet property="latLongDMSLabel" destination="94O-5C-j7V" id="nUi-oq-tGl"/>
-                        <outlet property="mapView" destination="kdl-YP-mfq" id="WBR-cb-tXO"/>
                         <outlet property="mgrsLabel" destination="deb-hn-DVt" id="Ien-xP-OxH"/>
                         <outlet property="outsideBufferLabel" destination="frd-B5-kVf" id="XCI-vz-Apa"/>
+                        <outlet property="sceneView" destination="kdl-YP-mfq" id="WBR-cb-tXO"/>
                         <outlet property="utmLabel" destination="ZW4-LU-LXO" id="Awy-pT-5vD"/>
                     </connections>
                 </viewController>

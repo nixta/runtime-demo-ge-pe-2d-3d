@@ -34,7 +34,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D9154BBF2358E9FD00765269 /* AltavianDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AltavianDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9154BBF2358E9FD00765269 /* AltavianDemo3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AltavianDemo3D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9154BC22358E9FD00765269 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9154BC42358E9FD00765269 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D9154BC62358E9FD00765269 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 		D9154BC02358E9FD00765269 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D9154BBF2358E9FD00765269 /* AltavianDemo.app */,
+				D9154BBF2358E9FD00765269 /* AltavianDemo3D.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,7 +118,7 @@
 			);
 			name = AltavianDemo;
 			productName = AltavianDemo;
-			productReference = D9154BBF2358E9FD00765269 /* AltavianDemo.app */;
+			productReference = D9154BBF2358E9FD00765269 /* AltavianDemo3D.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -331,8 +331,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.esri.runtime.productmanagement.AltavianDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.esri.runtime.productmanagement.AltavianDemo3D;
+				PRODUCT_NAME = AltavianDemo3D;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -353,8 +353,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.esri.runtime.productmanagement.AltavianDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.esri.runtime.productmanagement.AltavianDemo3D;
+				PRODUCT_NAME = AltavianDemo3D;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -19,7 +19,7 @@ let inBufferFieldName = "inBuffer"
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var mapView: AGSMapView!
+    @IBOutlet weak var sceneView: AGSSceneView!
     @IBOutlet weak var addGraphicsButton: UIButton!
     @IBOutlet weak var feedbackLabel: UILabel!
     @IBOutlet weak var insideBufferLabel: UILabel!
@@ -55,6 +55,8 @@ class ViewController: UIViewController {
         let overlay = AGSGraphicsOverlay()
         overlay.renderer = uvr
         
+        overlay.sceneProperties?.surfacePlacement = .relative
+        
         return overlay
     }()
     
@@ -66,21 +68,19 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        // Initialize the map "model".
-        let map = AGSMap(basemapType: .imageryWithLabelsVector, latitude: 40.7128, longitude: -74.0060, levelOfDetail: 15)
+        // Initialize the scene "model".
+        let scene = AGSScene(basemapType: AGSBasemapType.imagery)
+        scene.initialViewpoint = AGSViewpoint(latitude: 40.7128, longitude: -74.0060, scale: 10000)
         
         // Set the map view UI control to use this map.
-        mapView.map = map
+        sceneView.scene = scene
 
         // Add some overlays for the demo. One to show the moving graphic dots, and one to show the buffer.
-        mapView.graphicsOverlays.add(overlay)
-        mapView.graphicsOverlays.add(bufferOverlay)
+        sceneView.graphicsOverlays.add(overlay)
+        sceneView.graphicsOverlays.add(bufferOverlay)
         
         // Configure our app to handle UI interaction events
-        mapView.touchDelegate = self
-        
-        // Turn off an optional map view element (it gets in the way of this demo).
-        mapView.interactionOptions.isMagnifierEnabled = false
+        sceneView.touchDelegate = self
     }
     
     @IBAction func addGraphics(_ sender: Any) {
@@ -103,10 +103,11 @@ extension ViewController {
 
     /// Buffer creation
     func getBufferGeometryFor(mapPoint: AGSPoint) -> AGSPolygon? {
-        guard let extent = mapView.currentViewpoint(with: .boundingGeometry)?.targetGeometry as? AGSEnvelope else { return nil }
+        guard let extent = sceneView.currentViewpoint(with: .boundingGeometry)?.targetGeometry as? AGSEnvelope,
+            let webMercatorExtent = AGSGeometryEngine.projectGeometry(extent, to: AGSSpatialReference.webMercator()) as? AGSEnvelope else { return nil }
 
-        let unit = mapPoint.spatialReference?.unit as? AGSLinearUnit ?? AGSLinearUnit.meters()
-        let size = min(extent.width, extent.height) * bufferSize / 2
+        let unit = webMercatorExtent.spatialReference?.unit as? AGSLinearUnit ?? AGSLinearUnit.meters()
+        let size = min(webMercatorExtent.width, webMercatorExtent.height) * bufferSize / 2
         
         return AGSGeometryEngine.geodeticBufferGeometry(mapPoint, distance: size, distanceUnit: unit,
                                                         maxDeviation: Double.nan, curveType: .shapePreserving)
@@ -185,18 +186,19 @@ extension ViewController {
 extension ViewController {
     /// Create a randomly placed graphic within the current map view, and assign a random speed.
     func makeGraphic(withSpeed speed: Double) -> AGSGraphic {
-        let screenPoint = getRandomCoordinate(within: mapView.bounds)
-        let mapPoint = mapView.screen(toLocation: screenPoint)
+        let screenPoint = getRandomCoordinate(within: sceneView.bounds)
+        let mapPoint = sceneView.screen(toBaseSurface: screenPoint)
+        let mapPointWithZ = AGSGeometryEngine.geometry(bySettingZ: Double.random(in: 0...200), in: mapPoint)
         let heading = Int.random(in: 1...360).degreesToRadians
         let dx = sin(heading) * CGFloat(speed)
         let dy = cos(heading) * CGFloat(speed)
-        let graphic = AGSGraphic(geometry: mapPoint, symbol: nil, attributes:   ["dx": dx, "dy": dy, inBufferFieldName: 0])
+        let graphic = AGSGraphic(geometry: mapPointWithZ, symbol: nil, attributes:   ["dx": dx, "dy": dy, inBufferFieldName: 0])
         return graphic
     }
     
     /// Add a number of random graphics
     func addGraphics(count: Int) {
-        let viewPoint = mapView.currentViewpoint(with: .boundingGeometry)
+        let viewPoint = sceneView.currentViewpoint(with: .boundingGeometry)
         guard let extent = viewPoint?.targetGeometry as? AGSEnvelope else {
             print("Could not get a viewpoint extent!")
             return
@@ -232,7 +234,7 @@ extension ViewController {
     }
     
     func moveGraphics() {
-        guard let extent = mapView.currentViewpoint(with: .boundingGeometry)?.targetGeometry as? AGSEnvelope else {
+        guard let extent = sceneView.currentViewpoint(with: .boundingGeometry)?.targetGeometry as? AGSEnvelope else {
             print("Could not get a viewpoint extent!")
             return
         }
